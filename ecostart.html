@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoChic - Sustainable Fashion Boutique</title>
+    <title>EcoZone</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -37,9 +37,9 @@
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: bold;
-            color: var(--primary-color);
+            color: var(--accent-color);
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -124,7 +124,7 @@
             width: 100%;
             height: 100vh;
             pointer-events: none;
-            z-index: 999;
+            z-index: 1;
             overflow: hidden;
         }
 
@@ -201,6 +201,8 @@
         .products-section {
             padding: 5rem 5%;
             background: var(--light-bg);
+            z-index: 2;
+            position: relative;
         }
 
         .section-title {
@@ -1390,8 +1392,8 @@
         }
 
         // Cart Functionality
-        let cart = [];
-        
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
         function toggleCart() {
             const cartModal = document.querySelector('.cart-modal');
             const cartOverlay = document.querySelector('.cart-overlay');
@@ -1401,9 +1403,17 @@
             
             if (cartModal.classList.contains('active')) {
                 document.body.style.overflow = 'hidden';
+                updateCartModal(); // Update the cart contents when opening
             } else {
                 document.body.style.overflow = '';
             }
+        }
+
+        function updateCart() {
+            localStorage.setItem('cart', JSON.stringify(cart)); // Save cart to localStorage
+            updateCartCount(); // Update the cart count display
+            updateCartModal(); // Update the cart modal display
+            updateCartPreview(); // Update the cart preview display
         }
 
         function addToCart(productId, event) {
@@ -1428,9 +1438,7 @@
                 });
             }
             
-            updateCartCount();
-            updateCartModal();
-            updateCartPreview();
+            updateCart(); // This will save to localStorage and update UI
             showNotification('Added to cart!');
         }
 
@@ -1506,9 +1514,7 @@
             const index = cart.findIndex(item => item.id === productId);
             if (index > -1) {
                 cart.splice(index, 1);
-                updateCartCount();
-                updateCartModal();
-                updateCartPreview();
+                updateCart(); // This will save to localStorage and update UI
                 showNotification('Item removed from cart!');
             }
         }
@@ -1521,7 +1527,7 @@
                 if (cart[index].quantity < 1) {
                     removeFromCart(productId);
                 } else {
-                    updateCartModal();
+                    updateCart(); // This will save to localStorage and update UI
                 }
             }
         }
@@ -1584,9 +1590,13 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            renderProducts();
-            updateCartModal();
-            createLeaves();
+            // Load cart from localStorage
+            cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            renderProducts(); // Render products on page load
+            updateCartCount(); // Update cart count on load
+            updateCartPreview(); // Update cart preview on load
+            createLeaves(); // Create falling leaves animation
         });
 
         // Smooth Scroll for Navigation Links
