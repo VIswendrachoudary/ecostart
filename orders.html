@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Orders - EcoChic</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #27ae60;
+            --light-bg: #f8f9fa;
+            --text-dark: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .orders-container {
+            padding: 120px 5% 50px;
+            min-height: 100vh;
+            background: var(--light-bg);
+        }
+
+        .orders-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .orders-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .clear-all-btn {
+            padding: 0.8rem 1.5rem;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .clear-all-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .order-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            animation: slideIn 0.3s ease;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-number {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .order-date {
+            color: #666;
+        }
+
+        .order-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .status-processing {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-delivered {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .order-items {
+            margin: 1rem 0;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+
+        .item-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 1rem;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .item-price {
+            color: var(--accent-color);
+        }
+
+        .order-total {
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .no-orders {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .no-orders i {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .shop-now-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .shop-now-btn:hover {
+            background: #219a52;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="orders-container">
+        <div class="orders-header">
+            <h1 class="orders-title">Your Orders</h1>
+            <button class="clear-all-btn" onclick="clearAllOrders()">
+                <i class="fas fa-trash"></i>
+                Clear All Orders
+            </button>
+        </div>
+        <div id="orders-list">
+            <!-- Orders will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        function displayOrders() {
+            const ordersList = document.getElementById('orders-list');
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+
+            if (orders.length === 0) {
+                ordersList.innerHTML = `
+                    <div class="no-orders">
+                        <i class="fas fa-shopping-bag"></i>
+                        <h2>No Orders Yet</h2>
+                        <p>Looks like you haven't made any orders yet.</p>
+                        <a href="ecostart.html" class="shop-now-btn">Start Shopping</a>
+                    </div>
+                `;
+                return;
+            }
+
+            ordersList.innerHTML = orders.map(order => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-number">Order #${order.orderNumber}</span>
+                        <span class="order-date">${new Date(order.date).toLocaleDateString()}</span>
+                        <span class="order-status status-${order.status.toLowerCase()}">${order.status}</span>
+                    </div>
+                    <div class="order-items">
+                        ${order.items.map(item => `
+                            <div class="order-item">
+                                <img src="${item.image}" alt="${item.name}" class="item-image">
+                                <div class="item-details">
+                                    <div class="item-name">${item.name}</div>
+                                    <div class="item-price">₹${item.price} × ${item.quantity}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="order-total">
+                        Total: ₹${order.total}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function clearAllOrders() {
+            if (confirm('⚠️ Warning: This will permanently delete all your order history. Are you sure you want to continue?')) {
+                localStorage.removeItem('orders');
+                displayOrders();
+                showNotification('✨ All orders have been cleared successfully!');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', displayOrders);
+    </script>
+</body>
+</html> 

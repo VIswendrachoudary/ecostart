@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - EcoZone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a5f7a;
+            --accent-color: #2ecc71;
+            --light-bg: #f0f7fa;
+            --text-color: #2c3e50;
+            --shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--light-bg);
+            color: var(--text-color);
+        }
+
+        .about-hero {
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                        url('https://images.pexels.com/photos/3850512/pexels-photo-3850512.jpeg') center/cover fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(26, 95, 122, 0.3), rgba(46, 204, 113, 0.3));
+            animation: gradientShift 10s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+            100% { opacity: 0.3; }
+        }
+
+        .about-hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease;
+        }
+
+        .about-hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .about-content {
+            padding: 6rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .mission-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            margin-bottom: 4rem;
+            box-shadow: var(--shadow);
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .mission-section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .mission-section h2 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .mission-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+
+        .impact-numbers {
+            display: flex;
+            justify-content: space-around;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .impact-item .number {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .value-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .value-card i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Navigation Styles */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .track-order {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            color: #e74c3c;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.5rem;
+        }
+
+        .logout-btn:hover {
+            color: #c0392b;
+        }
+
+        .cart-icon {
+            cursor: pointer;
+            position: relative;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+            padding: 0.5rem;
+        }
+
+        .cart-icon:hover {
+            color: var(--accent-color);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 3rem 5%;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="logo">EcoZone</div>
+        <div class="nav-links">
+            <a href="ecostart.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+            <a href="orders.html" class="track-order">Your Orders</a>
+            <a href="#" onclick="handleLogout(event)" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            <div class="cart-icon" onclick="toggleCart()">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="about-hero">
+        <h1>About EcoZone</h1>
+    </div>
+
+    <div class="about-content">
+        <div class="mission-section">
+            <h2>Our Mission</h2>
+            <p>At EcoZone, we're committed to making sustainable living accessible to everyone. Our mission is to provide eco-friendly alternatives to everyday products, reducing environmental impact while maintaining quality and affordability.</p>
+            
+            <div class="impact-numbers">
+                <div class="impact-item">
+                    <span class="number">50K+</span>
+                    <p>Trees Planted</p>
+                </div>
+                <div class="impact-item">
+                    <span class="number">100K+</span>
+                    <p>Happy Customers</p>
+                </div>
+                <div class="impact-item">
+                    <span class="number">500K+</span>
+                    <p>Plastic Items Saved</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="values-section">
+            <h2>Our Values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Sustainability</h3>
+                    <p>Every product is carefully selected to minimize environmental impact.</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <h3>Quality</h3>
+                    <p>We never compromise on the quality of our products.</p>
+                </div>
+                <div class="value-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Community</h3>
+                    <p>Building a community of environmentally conscious consumers.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="team-section">
+            <!-- Add team members -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="ecostart.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Our Services</h3>
+                <ul>
+                    <li><a href="#">Eco Products</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                    <li><a href="#">Community</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 EcoZone. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Add this to check login status when page loads -->
+    <script>
+        window.onload = function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Add logout function
+        function handleLogout(event) {
+            event.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userEmail');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html> 
